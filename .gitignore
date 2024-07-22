@@ -1,0 +1,11 @@
+.vscode/
+wandb/
+checkpints/
+paper_models/
+outputs/
+.idea/
+debug*/
+__pycache__
+*.err
+*.out
+*.ttf

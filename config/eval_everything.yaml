@@ -1,0 +1,41 @@
+model_path: locuslab/tofu_ft_llama2-7b
+model_family: llama2-7b
+forget_loss: prompt_unlearn
+split: forget10
+save_dir: /mnt/data2/yujian/unlearn/${model_path}/${forget_loss}_${split}/checkpoint-10
+prompt_unlearn: false
+only_perturb: false
+
+#dataset path for each of the 4 datasets to be evaluated
+data_path: [locuslab/TOFU, locuslab/TOFU, locuslab/TOFU, locuslab/TOFU, locuslab/TOFU]
+split_list:
+  - retain_perturbed
+  - real_authors_perturbed
+  - world_facts_perturbed
+  - ${split}_perturbed
+  - ${split}_perturbed
+
+
+question_key: [question, question, question, question, paraphrased_question]
+answer_key: [answer, answer, answer, answer, answer]
+
+base_answer_key: [paraphrased_answer, answer, answer, paraphrased_answer, paraphrased_answer]
+perturbed_answer_key: [perturbed_answer, perturbed_answer, perturbed_answer, perturbed_answer, perturbed_answer]
+
+eval_task: [eval_log, eval_real_author_wo_options, eval_real_world_wo_options, eval_log_forget, eval_log_forget_paraphrased]
+
+generation:
+  max_length: 200
+  max_new_tokens: null
+
+save_generated_text: true
+
+ds_size: 500
+
+overwrite: false
+use_pretrained: false
+
+batch_size: 30
+reinitialize_weights: false
+
+retain_result: null

@@ -1,0 +1,63 @@
+model_family: llama2-7b
+model_path: "meta-llama/Llama-2-7b-chat-hf"
+from_hf_hub: true
+LoRA:
+  r: 0
+  alpha: 32
+  dropout: 0.05
+
+lr: 1e-5
+split: forget_100
+data_path: Shiyu-Lab/Wikipedia_Person_Unlearn
+input_type: document
+sentence_chunk: 3
+batch_size: 1
+gradient_accumulation_steps: 1
+num_epochs: 10
+seed: 42
+forget_loss: intervention
+non_factual: false
+overwrite_dir: false
+weight_decay: 0.01
+retain_strength: 0.0
+beta: 0.1
+save_dir_root: results
+save_dir: ${save_dir_root}/${model_path}/${forget_loss}/${seed}_${split}
+
+eval:
+  retain_result: null
+  model_path: ${..model_path}
+  model_family: ${..model_family}
+  save_dir: ${..save_dir}
+  data_path: [Shiyu-Lab/Wikipedia_Person_Unlearn, Shiyu-Lab/Wikipedia_Person_Unlearn, Shiyu-Lab/Wikipedia_Person_Unlearn]
+  split: ${..split}
+  split_list:
+    - ${split}
+    - ${split}_hard_retain
+    - general_retain
+
+  eval_task: [eval_log_forget, eval_log_hard_retain, eval_log_general_retain]
+  question_key: [question, question, question]
+  answer_key: [answer, answer, answer]
+  base_answer_key: [answer, answer, answer]
+  perturbed_answer_key: [answer, answer, answer]
+
+  generation:
+    max_length: 200
+    max_new_tokens: null
+
+  save_generated_text: true
+
+  ds_size: 2000
+
+  overwrite: false
+  use_pretrained: false
+
+  batch_size: 32
+
+teacher:
+  N: 20
+  counter_fact_prompt: true
+  change_name_back: true
+  whp_baseline: false
+  verbose: true

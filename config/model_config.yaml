@@ -1,0 +1,32 @@
+llama2-7b:
+  hf_key: "meta-llama/Llama-2-7b-chat-hf"
+  question_start_tag: "[INST] "
+  question_end_tag: " [/INST]"
+  answer_tag: ""
+  flash_attention2: "true"
+  gradient_checkpointing: "true"
+  ft_model_path: "" #this model will be used for unlearning by defauly
+alpaca:
+  hf_key: "chavinlo/alpaca-native"
+  question_start_tag: "Below is an instruction that describes a task. Write a response that appropriately completes the request.\n\n### Instruction:\n"
+  question_end_tag: "\n\n### Response:\n"
+  answer_tag: ""
+  flash_attention2: "true"
+  gradient_checkpointing: "true"
+  ft_model_path: ""
+pythia:
+  hf_key: "EleutherAI/pythia-2.8b-v0"
+  question_start_tag: "Question: "
+  question_end_tag: "\n"
+  answer_tag: "Answer: "
+  flash_attention2: "false"
+  gradient_checkpointing: "false"
+  ft_model_path: "EleutherAI/pythia-2.8b-v0"
+phi:
+  hf_key: "microsoft/phi-1_5"
+  question_start_tag: "Question: "
+  question_end_tag: "\n"
+  answer_tag: "Answer: "
+  flash_attention2: "false"
+  gradient_checkpointing: "false"
+  ft_model_path: "microsoft/phi-1_5"
